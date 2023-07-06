@@ -15,7 +15,7 @@ app.use(
 const port = process.env.PORT || 5000;
 
 console.log("express project");
-// connectDb();
+connectDb();
 app.use(express.json());
 app.use("/LZW", require("./routes/LZW_Routes"));
 app.use(errorHandler)
