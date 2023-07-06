@@ -5,7 +5,9 @@ const {
     createHistory,
     getHistoryById,
     deleteHistory,
-    deleteAllHistories
+    deleteAllHistories,
+    compress,
+    decompress
 } = require("../controllers/LZW_Controller");
 
 // status : 
@@ -16,6 +18,10 @@ const {
 // 500 - Internal Server Error
 
 router.route('/').get(getHistories).post(createHistory).delete(deleteAllHistories);
+router.route("/compress").post(compress);    
+router.route("/decompress").post(decompress);
+// urutan ini penting, jika tidak, maka akan dianggap id = 'compress' atau 'decompress'
+// :(sesuatu) adalah parameter
 router.route("/:id").get(getHistoryById).delete(deleteHistory);
 
 module.exports = router;

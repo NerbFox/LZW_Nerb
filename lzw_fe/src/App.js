@@ -12,7 +12,11 @@ const App = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`${react_url}/LZW`);
+      const response = await fetch(`${react_url}/LZW`, 
+        {
+          method: 'GET',
+          // body: JSON.stringify({type: 'ascii'}),  
+        });
       if (!response.ok) {
         throw new Error('Error fetching data');
       }
@@ -44,7 +48,6 @@ const App = () => {
     }
   };
 
-
   useEffect(() => {
     setMessage('Loading histories...');
     fetchData();
@@ -63,7 +66,26 @@ const App = () => {
     setBinaryInput(event.target.value);
   };
 
-  const compressAscii = () => {
+  const DeleteAllHistories = async () => {
+    try {
+      const response = await fetch(`${react_url}/LZW`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Error deleting data');
+      }
+      setMessage('Success deleting data');
+      setMessage('');
+      setHistory([]);
+    } catch (error) {
+      setMessage('Error deleting data');
+    }
+  };
+
+  const compressAscii = async () => {
     // Perform LZW compression on asciiInput
     // Set the compressed result in compressedInput state
     // implementation the LZW compression algorithm here
@@ -73,9 +95,30 @@ const App = () => {
       return;
     }
 
-    var result = asciiInput+' compressed';
+    var result = asciiInput+' belum';
+    // get from backend
+    try {
+      const response = await fetch(`${react_url}/LZW/compress`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({message: asciiInput}),
+      });
+      if (!response.ok) {
+        throw new Error('Error compressing data');
+      }
+      const data = await response.json();
+      setMessage('Success compressing data');
+      setMessage('');
+      result = data.message;
+    } catch (error) {
+      setMessage('Error compressing data');
+    }
 
-    setCompressedInput(result)
+    setMessage(`data: ${result}`);
+    // var result = asciiInput+' compressed';
+    setCompressedInput(result);
     // add to database and update history
     const newHistory = [
       ...history,
@@ -84,9 +127,10 @@ const App = () => {
     addHistory({ type: 'ascii', input: asciiInput, output: result });
     setHistory(newHistory);
     // fetchData();
+    // setMessage(`param: ${param.message}`);
   };
 
-  const decompressBinary = () => {
+  const decompressBinary = async () => {
     // Perform LZW decompression on binaryInput
     // Set the decompressed result in decompressedOutput state
     // implementation the LZW decompression algorithm here
@@ -97,7 +141,26 @@ const App = () => {
     }
 
     var result = binaryInput+' decompressed';
-    
+    // get from backend
+    try {
+      const response = await fetch(`${react_url}/LZW/decompress`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({message: binaryInput}),
+      });
+      if (!response.ok) {
+        throw new Error('Error decompressing data');
+      }
+      const data = await response.json();
+      setMessage('Success decompressing data');
+      setMessage('');
+      result = data.message;
+    } catch (error) {
+      setMessage('Error decompressing data');
+    }
+
     setDecompressedOutput(result);
     // add to database and update history
     const newHistory = [
@@ -121,6 +184,7 @@ const App = () => {
   return (
     <div className="container">
       <div className="history">
+        <h1 className="space">Space</h1>
         <div className="ascii-history">
           <h2 className="title">ASCII History</h2>
           {history.map((item, index) => {
@@ -165,6 +229,9 @@ const App = () => {
             return null;
           })}
         </div>
+        <button className="button" onClick={DeleteAllHistories}>
+            Delete All
+        </button>
       </div>
       {/* <div className="history">
         <h2 className="title">History</h2>
@@ -194,7 +261,7 @@ const App = () => {
             onChange={handleAsciiInputChange}
           ></textarea>
           <br />
-          <button className="button" onClick={compressAscii}>
+          <button className="button" onClick={() => compressAscii()}>
             Compress
           </button>
           <h3>Compressed Result:</h3>
@@ -208,6 +275,7 @@ const App = () => {
       <div/>
       </div>
       <div className="content2">
+        <h1 className="space">Space</h1>
         <div className="section">
           <h2>Binary Input</h2>
           <textarea

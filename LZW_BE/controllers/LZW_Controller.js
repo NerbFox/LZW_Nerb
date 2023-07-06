@@ -1,10 +1,13 @@
 const asyncHandler = require("express-async-handler");
 const History = require("../models/Model");   
-
+const { compressLZW, decompressLZW } = require("../algo");
 //@desc Get all history
 //@route GET /LZW
 //@access Public
 const getHistories = asyncHandler(async (req, res) => {
+    console.log("I am in getHistories...");
+    // console.log("The request body is: ", req.body);
+    // console.log("The request params is: ", req.params);
     const history = await History.find();
     res.status(200).json(history);
 });
@@ -13,6 +16,9 @@ const getHistories = asyncHandler(async (req, res) => {
 //@route GET /LZW/:id
 //@access Public
 const getHistoryById = asyncHandler(async (req, res) => {
+    console.log("I am in getHistoryById...");
+    console.log("The request body is: ", req.body);
+    console.log("The request params is: ", req.params);
     const history = await History.findById(req.params.id);
     if(history){
         res.json(history);
@@ -72,10 +78,30 @@ const deleteAllHistories = asyncHandler(async (req, res) => {
     }
   });  
 
+const compress = asyncHandler(async (req, res) => {
+    // Perform LZW compression on asciiInput from algo.js
+    console.log("I am in compress");
+    const result = await compressLZW(req.body.message);
+    res.status(200).json({"message": result});
+    console.log("result: ", result);
+});
+
+const decompress = asyncHandler(async (req, res) => {
+    // Perform LZW decompression on binaryInput from algo.js
+    console.log("I am in decompress");
+    const result = decompressLZW(req.body.message);
+    res.status(200).json({message: result});
+    console.log("result: ", result);
+});
+
+    
+
 module.exports = { 
     getHistories,
     createHistory,
     deleteHistory,
     deleteAllHistories,
-    getHistoryById
+    getHistoryById,
+    compress,
+    decompress
 };

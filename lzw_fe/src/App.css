@@ -1,3 +1,14 @@
+/* constnt color */
+:root {
+  --bg: #1f1f7a;
+  --text: #ffffff;
+  --input: #1a1a4a;
+  --output: #1a1a4a;
+  --button: #16ff32;
+  --button-hover: #ff7f00;
+  --history: #1f1f7a;
+  --history-item-hover: #6a006a;
+}
 body {
   margin: 0;
   padding: 0;
@@ -11,10 +22,10 @@ body {
 
 .container {
   /* title at the center */
-  flex-direction: column;
   justify-content: center;
   display: flex;
   flex-direction: row;
+  /* menyesuaiakan ukuran layar */
   width: 1200px;
   background-color: #1f1f7a;
   color: #ffffff;
@@ -40,6 +51,9 @@ body {
   overflow-y: auto;
 }
 
+.space {
+  color: #1f1f7a;
+}
 .content1 {
   flex: 2;
   padding: 20px;
