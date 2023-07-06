@@ -185,8 +185,8 @@ const App = () => {
     <div className="container">
       <div className="history">
         <h1 className="space">Space</h1>
-        <div className="ascii-history">
           <h2 className="title">ASCII History</h2>
+          <div className="ascii-history">
           {history.map((item, index) => {
             if (item.type === 'ascii') {
               return (
@@ -206,9 +206,9 @@ const App = () => {
             }
             return null;
           })}
-        </div>
-        <div className="binary-history">
+          </div>
           <h2 className="title">Binary History</h2>
+          <div className="binary-history">
           {history.map((item, index) => {
             if (item.type === 'binary') {
               return (
@@ -294,7 +294,9 @@ const App = () => {
             readOnly
             value={decompressedOutput}
           ></textarea>
-          message: <p>{message}</p>
+          <p> message: {message}</p> 
+          {/* <p className="space">Space</p> */}
+          <p2> author: Nigel Sahl </p2>
         </div>
       </div>
     </div>

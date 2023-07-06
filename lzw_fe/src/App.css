@@ -1,13 +1,13 @@
 /* constnt color */
 :root {
-  --bg: #1f1f7a;
+  --bg: #1c1c71;
   --text: #ffffff;
   --input: #1a1a4a;
   --output: #1a1a4a;
   --button: #16ff32;
   --button-hover: #ff7f00;
   --history: #1f1f7a;
-  --history-item-hover: #6a006a;
+  --history-item-hover: #37378a;
 }
 body {
   margin: 0;
@@ -16,7 +16,7 @@ body {
   justify-content: center;
   align-items: center;
   /* height: vh; */
-  background-color: #1f1f7a;
+  background-color: var(--bg);
   font-family: Arial, sans-serif;
 }
 
@@ -27,37 +27,42 @@ body {
   flex-direction: row;
   /* menyesuaiakan ukuran layar */
   width: 1200px;
-  background-color: #1f1f7a;
-  color: #ffffff;
+  background-color: var(--bg);
+  color: var(--text);
   overflow: hidden;
 }
 
 .history {
   flex: 1;
   padding: 20px;
-  background-color: #1f1f7a;
+  background-color: var(--bg);
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  /* height: 100%; */
+  /* overflow-y: auto; */
 }
 
 .ascii-history {
   flex: 1;
   overflow-y: auto;
+  border: (0.3)px solid #ffffff;
+  /* background-color: var(--input); */
 }
 
 .binary-history {
   flex: 1;
   overflow-y: auto;
+  border: (0.3)px solid #ffffff;
+  /* background-color: var(--input); */
 }
 
 .space {
-  color: #1f1f7a;
+  color: var(--bg);
 }
 .content1 {
   flex: 2;
   padding: 20px;
-  background-color: #1f1f7a;
+  background-color: var(--bg);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,7 +70,7 @@ body {
 .content2 {
   flex: 2;
   padding: 20px;
-  background-color: #1f1f7a;
+  background-color: var(--bg);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -74,7 +79,7 @@ body {
 .title {
   text-align: center;
   margin-bottom: 20px;
-  color: #ffffff;
+  color: var(--text);
 }
 
 .section {
@@ -88,8 +93,8 @@ body {
   padding: 10px;
   border: (0.3)px solid #ffffff;
   border-radius: 4px;
-  background-color: #1a1a4a;
-  color: #ffffff;
+  background-color: var(--input);
+  color: var(--text);
   font-family: Arial, sans-serif;
   overflow-y: auto;
 }
@@ -98,13 +103,14 @@ body {
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
-  background-color: #16ff32;
-  color: #1f1f7a;
+  background-color: var(--button);
+  color: var(--bg);
   cursor: pointer;
 }
 
 .button:hover {
-  background-color: #ff7f00;
+  color: var(--text);
+  background-color: var(--button-hover);
 }
 
 .history-item {
@@ -113,7 +119,7 @@ body {
 }
 
 .history-item:hover {
-  background-color: #6a006a;
+  background-color: var(--history-item-hover);
 }
 
 .history-input,
