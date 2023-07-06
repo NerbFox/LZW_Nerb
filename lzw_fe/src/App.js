@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 const App = () => {
@@ -7,6 +7,49 @@ const App = () => {
   const [binaryInput, setBinaryInput] = useState('');
   const [decompressedOutput, setDecompressedOutput] = useState('');
   const [history, setHistory] = useState([]);
+  const [message, setMessage] = useState(''); // State to store success or error message
+  const react_url = "http://localhost:5001"
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`${react_url}/LZW`);
+      if (!response.ok) {
+        throw new Error('Error fetching data');
+      }
+      const data = await response.json();
+      setHistory(data); // Set data in History state
+      setMessage('Success fetching data');
+      setMessage('');
+    } catch (error) {
+      setMessage('Error fetching data');
+    }
+  };
+
+  const addHistory = async (newHistory) => {
+    try {
+      const response = await fetch(`${react_url}/LZW`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newHistory),
+      });
+      if (!response.ok) {
+        throw new Error('Error adding data');
+      }
+      setMessage('Success adding data');
+      setMessage('');
+    } catch (error) {
+      setMessage('Error adding data');
+    }
+  };
+
+
+  useEffect(() => {
+    setMessage('Loading histories...');
+    fetchData();
+  }, []);
+
 
   const handleAsciiInputChange = (event) => {
     setAsciiInput(event.target.value);
@@ -23,26 +66,45 @@ const App = () => {
   const compressAscii = () => {
     // Perform LZW compression on asciiInput
     // Set the compressed result in compressedInput state
-    // You need to implement the LZW compression algorithm here
+    // implementation the LZW compression algorithm here
 
-    // Update history with the compressed result
+    // jika sudah ada di database, maka tidak perlu dihitung lagi
+    if (asciiInput === '' || history.find(history => history.input === asciiInput)) {
+      return;
+    }
+
+    var result = asciiInput+' compressed';
+
+    setCompressedInput(result)
+    // add to database and update history
     const newHistory = [
       ...history,
-      { type: 'ascii', input: asciiInput, output: compressedInput },
+      { type: 'ascii', input: asciiInput, output: result },
     ];
+    addHistory({ type: 'ascii', input: asciiInput, output: result });
     setHistory(newHistory);
+    // fetchData();
   };
 
   const decompressBinary = () => {
     // Perform LZW decompression on binaryInput
     // Set the decompressed result in decompressedOutput state
-    // You need to implement the LZW decompression algorithm here
+    // implementation the LZW decompression algorithm here
 
-    // Update history with the decompressed result
+    // jika sudah ada di database, maka tidak perlu dihitung lagi
+    if (binaryInput === '' || history.find(history => history.input === binaryInput)) {
+      return;
+    }
+
+    var result = binaryInput+' decompressed';
+    
+    setDecompressedOutput(result);
+    // add to database and update history
     const newHistory = [
       ...history,
-      { type: 'binary', input: binaryInput, output: decompressedOutput },
+      { type: 'binary', input: binaryInput, output: result },
     ];
+    addHistory({ type: 'binary', input: binaryInput, output: result });
     setHistory(newHistory);
   };
 
@@ -59,6 +121,52 @@ const App = () => {
   return (
     <div className="container">
       <div className="history">
+        <div className="ascii-history">
+          <h2 className="title">ASCII History</h2>
+          {history.map((item, index) => {
+            if (item.type === 'ascii') {
+              return (
+                <div
+                  className="history-item"
+                  key={index}
+                  onClick={() => selectHistoryItem(item)}
+                >
+                  <div className="history-input">
+                    <span>Input:</span> {item.input}
+                  </div>
+                  <div className="history-output">
+                    <span>Output:</span> {item.output}
+                  </div>
+                </div>
+              );
+            }
+            return null;
+          })}
+        </div>
+        <div className="binary-history">
+          <h2 className="title">Binary History</h2>
+          {history.map((item, index) => {
+            if (item.type === 'binary') {
+              return (
+                <div
+                  className="history-item"
+                  key={index}
+                  onClick={() => selectHistoryItem(item)}
+                >
+                  <div className="history-input">
+                    <span>Input:</span> {item.input}
+                  </div>
+                  <div className="history-output">
+                    <span>Output:</span> {item.output}
+                  </div>
+                </div>
+              );
+            }
+            return null;
+          })}
+        </div>
+      </div>
+      {/* <div className="history">
         <h2 className="title">History</h2>
         {history.map((item, index) => (
           <div
@@ -74,7 +182,7 @@ const App = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
       <div className="content1">
         <h1 className="title">LZW Nerb App</h1>
         <div className="section">
@@ -118,6 +226,7 @@ const App = () => {
             readOnly
             value={decompressedOutput}
           ></textarea>
+          message: <p>{message}</p>
         </div>
       </div>
     </div>

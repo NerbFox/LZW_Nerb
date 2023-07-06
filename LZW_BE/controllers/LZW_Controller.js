@@ -63,17 +63,14 @@ const deleteHistory = asyncHandler(async (req, res) => {
 //@route DELETE /LZW
 //@access Public
 const deleteAllHistories = asyncHandler(async (req, res) => {
-    const histories = await History.find();
-    if(histories){
-        await histories.remove();  // remove all history from the database
-        res.json({message: "History removed"});
-    }else{
-        res.status(404);
-        throw new Error("History not found");
+    const deleteResult = await History.deleteMany();
+    if (deleteResult.deletedCount > 0) {
+      res.json({ message: "History removed" });
+    } else {
+      res.status(404);
+      throw new Error("History not found");
     }
-});
-
-
+  });  
 
 module.exports = { 
     getHistories,
