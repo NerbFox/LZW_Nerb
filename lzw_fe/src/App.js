@@ -148,7 +148,7 @@ const App = () => {
       return;
     }
     
-    var result = asciiInput+' belum';
+    var result = asciiInput+' compressed';
     // get from backend
     try {
       const response = await fetch(`${react_url}/LZW/compress`, {
