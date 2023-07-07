@@ -2,9 +2,11 @@
 :root {
   --bg: #1c1c71;
   --text: #ffffff;
+  --text2: #e0e0fa;
   --input: #1a1a4a;
   --output: #1a1a4a;
   --button: #16ff32;
+  --button_delete: #ff0000;
   --button-hover: #ff7f00;
   --history: #1f1f7a;
   --history-item-hover: #37378a;
@@ -41,10 +43,14 @@ body {
   /* height: 100%; */
   /* overflow-y: auto; */
 }
-
+.ascii-history .history-item {
+    display: inline-block;
+    margin-right: 10px;  
+}
 .ascii-history {
   flex: 1;
   overflow-y: auto;
+  overflow-x: auto;
   border: (0.3)px solid #ffffff;
   /* background-color: var(--input); */
 }
@@ -52,6 +58,7 @@ body {
 .binary-history {
   flex: 1;
   overflow-y: auto;
+  overflow-x: auto;
   border: (0.3)px solid #ffffff;
   /* background-color: var(--input); */
 }
@@ -99,6 +106,16 @@ body {
   overflow-y: auto;
 }
 
+.button-delete {
+  background-color: var(--button_delete);
+  color: var(--text2);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: left;
+  margin-left: 10px;
+}
+
 .button {
   padding: 10px 20px;
   border: none;
@@ -108,9 +125,31 @@ body {
   cursor: pointer;
 }
 
+.button-delete-big {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--button_delete);
+  color: var(--text2);
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.button-delete-big:hover,
+.button-delete:hover,
 .button:hover {
   color: var(--text);
   background-color: var(--button-hover);
+}
+
+.button-group {
+  display: flex;
+  align-items: center;
+}
+
+.button-space {
+  width: 15px; /* Adjust the width as needed */
 }
 
 .history-item {

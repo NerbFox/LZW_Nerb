@@ -9,6 +9,7 @@ const App = () => {
   const [history, setHistory] = useState([]);
   const [message, setMessage] = useState(''); // State to store success or error message
   const react_url = "http://localhost:5001"
+  const max_char_history = 29;
 
   const fetchData = async () => {
     try {
@@ -53,6 +54,9 @@ const App = () => {
     fetchData();
   }, []);
 
+  const wait = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
   const handleAsciiInputChange = (event) => {
     setAsciiInput(event.target.value);
@@ -66,23 +70,59 @@ const App = () => {
     setBinaryInput(event.target.value);
   };
 
-  const DeleteAllHistories = async () => {
-    try {
-      const response = await fetch(`${react_url}/LZW`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      if (!response.ok) {
-        throw new Error('Error deleting data');
+  const deleteHistory = async (event, item) => {
+    event.stopPropagation(); // Prevent the history item click event from firing
+    if (window.confirm('Are you sure you want to delete this item?')) {
+      try {
+        setMessage('Deleting data...');
+        const response = await fetch(`${react_url}/LZW/${item._id}`, {
+          method: 'DELETE',
+        });
+        if(response.ok){
+          setMessage(`Success deleting data`);
+          wait(5000);
+          setMessage('');
+        }else{
+          setMessage('Error deleting data');
+          throw new Error('Error deleting data');
+        }
+        const updatedHistory = history.filter((h) => h._id !== item._id);
+        setHistory(updatedHistory);
+      } catch (error) {
+        setMessage('Error deleting data');
       }
-      setMessage('Success deleting data');
-      setMessage('');
-      setHistory([]);
-    } catch (error) {
-      setMessage('Error deleting data');
     }
+  };
+
+  const deleteAllHistories = async () => {
+    if (window.confirm('Are you sure you want to delete ALL items?')) {
+      try {
+        const response = await fetch(`${react_url}/LZW`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        if (!response.ok) {
+          throw new Error('Error deleting data');
+        }
+        setMessage('Success deleting data');
+        setMessage('');
+        setHistory([]);
+      } catch (error) {
+        setMessage('Error deleting data');
+      }
+    }
+  };
+
+  const copyToClipboardC = () => {
+    navigator.clipboard.writeText(compressedInput);
+    // setMessage('Copied to clipboard');
+  };
+
+  const copyToClipboardD = () => {
+    navigator.clipboard.writeText(decompressedOutput);
+    // setMessage('Copied to clipboard');
   };
 
   const compressAscii = async () => {
@@ -90,11 +130,24 @@ const App = () => {
     // Set the compressed result in compressedInput state
     // implementation the LZW compression algorithm here
 
-    // jika sudah ada di database, maka tidak perlu dihitung lagi
-    if (asciiInput === '' || history.find(history => history.input === asciiInput)) {
+    // jika input kosong, maka tidak perlu dihitung
+    if (asciiInput === '') {
       return;
     }
 
+    // jika sudah ada di database, maka tidak perlu dihitung lagi langsung ambil dari database
+    var found = false;
+    history.forEach(history => {
+      // pick from database
+      if (history.input === asciiInput){
+        setCompressedInput(history.output);
+        found = true;
+      }
+    });
+    if (found){
+      return;
+    }
+    
     var result = asciiInput+' belum';
     // get from backend
     try {
@@ -135,8 +188,21 @@ const App = () => {
     // Set the decompressed result in decompressedOutput state
     // implementation the LZW decompression algorithm here
 
+    // jika input kosong, maka tidak perlu dihitung
+    if (binaryInput === '') {
+      return;
+    }
+
     // jika sudah ada di database, maka tidak perlu dihitung lagi
-    if (binaryInput === '' || history.find(history => history.input === binaryInput)) {
+    var found = false;
+    history.forEach(history => {
+      // pick from database
+      if (history.input === binaryInput){
+        setDecompressedOutput(history.output);
+        found = true;
+      }
+    });
+    if (found){
       return;
     }
 
@@ -196,11 +262,19 @@ const App = () => {
                   onClick={() => selectHistoryItem(item)}
                 >
                   <div className="history-input">
-                    <span>Input:</span> {item.input}
+                    {/* if the item input is too long, then show only the first max_char_history characters */}
+                    <span>Input:</span> {item.input.length > max_char_history ? item.input.substring(0, max_char_history) + ' ...' : item.input}
                   </div>
                   <div className="history-output">
-                    <span>Output:</span> {item.output}
+                    {/* if the item output is too long, then show only the first max_char_history characters */}
+                    <span>Output:</span> {item.output.length > max_char_history ? item.output.substring(0, max_char_history) + ' ...' : item.output}
                   </div>
+                  <button
+                    className="button-delete"
+                    onClick={(e) => deleteHistory(e, item)}
+                  >
+                    Delete
+                  </button>
                 </div>
               );
             }
@@ -218,18 +292,26 @@ const App = () => {
                   onClick={() => selectHistoryItem(item)}
                 >
                   <div className="history-input">
-                    <span>Input:</span> {item.input}
+                    {/* if the item input is too long, then show only the first max_char_history characters */}
+                    <span>Input:</span> {item.input.length > max_char_history ? item.input.substring(0, max_char_history) + ' ...' : item.input}
                   </div>
                   <div className="history-output">
-                    <span>Output:</span> {item.output}
+                    {/* if the item output is too long, then show only the first max_char_history characters */}
+                    <span>Output:</span> {item.output.length > max_char_history ? item.output.substring(0, max_char_history) + ' ...' : item.output}
                   </div>
+                  <button
+                    className="button-delete"
+                    onClick={(e) => deleteHistory(e, item)}
+                  >
+                    Delete
+                  </button>
                 </div>
               );
             }
             return null;
           })}
         </div>
-        <button className="button" onClick={DeleteAllHistories}>
+        <button className="button-delete-big" onClick={deleteAllHistories}>
             Delete All
         </button>
       </div>
@@ -261,9 +343,15 @@ const App = () => {
             onChange={handleAsciiInputChange}
           ></textarea>
           <br />
-          <button className="button" onClick={() => compressAscii()}>
-            Compress
-          </button>
+          <div className="button-group">
+            <button className="button" onClick={compressAscii}>
+              Compress
+            </button>
+            <div className="button-space"></div>
+            <button className="button" onClick={copyToClipboardC}>
+              Copy Result
+            </button>
+          </div>
           <h3>Compressed Result:</h3>
           <textarea
             className="output-area"
@@ -285,9 +373,15 @@ const App = () => {
             onChange={handleBinaryInputChange}
           ></textarea>
           <br />
-          <button className="button" onClick={decompressBinary}>
-            Decompress
-          </button>
+          <div className="button-group">
+            <button className="button" onClick={decompressBinary}>
+              Decompress
+            </button>
+            <div className="button-space"></div>
+            <button className="button" onClick={copyToClipboardD}>
+              Copy Result
+            </button>
+          </div>
           <h3>Decompressed Result:</h3>
           <textarea
             className="output-area"

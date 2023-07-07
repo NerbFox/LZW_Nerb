@@ -22,6 +22,6 @@ router.route("/compress").post(compress);
 router.route("/decompress").post(decompress);
 // urutan ini penting, jika tidak, maka akan dianggap id = 'compress' atau 'decompress'
 // :(sesuatu) adalah parameter
-router.route("/:id").get(getHistoryById).delete(deleteHistory);
-
+router.route("/:id").delete(deleteHistory);
+router.route("/:id").get(getHistoryById)
 module.exports = router;

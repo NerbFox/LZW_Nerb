@@ -55,13 +55,22 @@ const createHistory = asyncHandler(async (req, res) => {
 //@route DELETE /LZW/:id
 //@access Public
 const deleteHistory = asyncHandler(async (req, res) => {
-    const history = await History.findById(req.params.id);
-    if(history){
-        await history.remove();
-        res.json({message: "History removed"});
-    }else{
+    console.log("I am in deleteHistory by id...");
+    try{
+        const history = await History.findByIdAndDelete(req.params.id);
+        console.log("The request body is: ", req.body);
+        if(history){
+            console.log("The history was deleted successfully");
+            res.json({ message: "History removed" });
+        }else{
+            console.log("The history was not found");
+            res.status(404);
+            throw new Error("History not found");
+        }
+    }catch(err){
+        console.log("Error: ", err);
+        res.json({ message: "History not found" });
         res.status(404);
-        throw new Error("History not found");
     }
 });
 
@@ -69,6 +78,7 @@ const deleteHistory = asyncHandler(async (req, res) => {
 //@route DELETE /LZW
 //@access Public
 const deleteAllHistories = asyncHandler(async (req, res) => {
+    console.log("I am in deleteAllHistories...");
     const deleteResult = await History.deleteMany();
     if (deleteResult.deletedCount > 0) {
       res.json({ message: "History removed" });

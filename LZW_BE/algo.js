@@ -83,7 +83,8 @@ function compressLZW(ascii) {
     console.log('the ascii of space:'+ dictionary[' ']);
     console.log(input.length);
     for (var i = 0; i < input.length; i++) {
-        console.log('-----------------');
+        console.log('-----------------' + (i+1));
+        console.log('current char: '+input[i]);
         // output.push(dictionary[input[i]]);
         var temp = string + input[i];
         if (dictionary[temp] !== undefined) { // if temp is in dictionary then string = temp
@@ -91,33 +92,82 @@ function compressLZW(ascii) {
             string = temp;
         }
         else { // if temp is not in dictionary then add temp to dictionary and output string
-            console.log('temp is not in dictionary');
+            console.log('temp is not in dictionary, push string to output and update dictionary with temp');
             output.push(dictionary[string]);
             dictionary[temp] = Object.keys(dictionary).length;
+            console.log('dictionary temp: '+dictionary[temp]);
+            console.log('dictionary string: '+dictionary[string]);
             string = input[i];
         }
         console.log('temp: '+temp);
-        console.log('dictionary temp: '+dictionary[temp]);
         console.log('string:'+string);
         console.log('-----------------');
+    }
+    // last
+    output.push(dictionary[string]);
+    console.log('-----------------LAST');
+    console.log('temp: '+temp);
+    console.log('string:'+string);
+    console.log('dictionary temp: '+dictionary[temp]);
+    console.log('dictionary string: '+dictionary[string]);
+    console.log('-----------------');
+
+    console.log('input: '+input);
+    console.log('input length: '+input.length);
+    console.log('output: '+output);
+    // output string in dictionary
+    strDict = '';
+    for (var i = 0; i < output.length; i++) {
+        strDict += Object.keys(dictionary)[output[i]] + '|';
+    }
+    console.log('output string in dictionary: '+strDict);
+    console.log('output length: '+output.length);
+    return arrDecToStrBin(output);
+  }  
+  
+function decompressLZW(binaryString) {
+    var input = binaryStringToDecimal(binaryString);
+    var dictionary = {};
+    var string = '';
+    var output = [];
+    for (var i = 0; i < 256; i++) {
+        dictionary[i] = String.fromCharCode(i);
+    }
+    var prev = input[0];
+    var prevChar = dictionary[prev];
+    var current = '';
+    var currentChar = '';
+    var n = 256;
+    string += prevChar;
+    output.push(prevChar);
+    for (var i = 0; i < input.length - 1; i++) {
+        current = input[i + 1];
+        if (dictionary[current] !== undefined) { // if current is in dictionary
+            currentChar = dictionary[current];
+        }
+        else { // if current is not in dictionary 
+            currentChar = prevChar + prevChar.charAt(0);
+        }
+        output.push(currentChar);
+        string += currentChar;
+        dictionary[n] = prevChar + currentChar.charAt(0);
+        n++;
+        prevChar = currentChar;
     }
     console.log('input: '+input);
     console.log('input length: '+input.length);
     console.log('output: '+output);
     console.log('output length: '+output.length);
-    return arrDecToStrBin(output);
-  }  
-  
-function decompressLZW(binary){
-    return binary+' decompressed';
-}   
+    console.log('string: '+string);
+    return string;
+}
 
-var ascii = 'llak;gk jaf;  aldfjal  lajfslf  afdlsfkj kkjull';
-// var ascii2 = 'cabdfghabd jakfdl ajldfjlka jak huihuihuihuihuihui'
-var ascii2 = 'huihuihuihuihuihui'
-console.log("oke"); 
-console.log('ascii: '+ascii2);
-var output = compressLZW(ascii2);
+// var ascii = 'llak;gk jaf;  aldfjal  lajfslf  afdlsfkj kkjull';
+// var ascii = 'cabdfghabd jakfdl ajldfjlka jak huihuihuihuihuihui'
+// var ascii = 'huihuihuihuihuihui'
+var ascii = 'hui hui hui hui hui hui'
+// var ascii = 'h'
+var output = compressLZW(ascii);
 console.log('result: '+output);
 console.log('check: '+binaryStringToDecimal(output));
 
