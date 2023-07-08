@@ -73,6 +73,8 @@ const App = () => {
   const deleteHistory = async (event, item) => {
     event.stopPropagation(); // Prevent the history item click event from firing
     if (window.confirm('Are you sure you want to delete this item?')) {
+      const updatedHistory = history.filter((h) => h.input !== item.input);
+      setHistory(updatedHistory);
       try {
         setMessage('Deleting data...');
         const response = await fetch(`${react_url}/LZW/${item._id}`, {
@@ -86,8 +88,8 @@ const App = () => {
           setMessage('Error deleting data');
           throw new Error('Error deleting data');
         }
-        const updatedHistory = history.filter((h) => h._id !== item._id);
-        setHistory(updatedHistory);
+        // const updatedHistory = history.filter((h) => h.input !== item.input);
+        // setHistory(updatedHistory);
       } catch (error) {
         setMessage('Error deleting data');
       }
@@ -95,8 +97,12 @@ const App = () => {
   };
 
   const deleteAllHistories = async () => {
+    setMessage('confirm deleting all data...');
     if (window.confirm('Are you sure you want to delete ALL items?')) {
+      setMessage('Deleting all data...');
       try {
+        setHistory([]); 
+        setMessage('Deleting all data in database...');
         const response = await fetch(`${react_url}/LZW`, {
           method: 'DELETE',
           headers: {
@@ -108,10 +114,11 @@ const App = () => {
         }
         setMessage('Success deleting data');
         setMessage('');
-        setHistory([]);
+        setHistory([]); 
       } catch (error) {
-        setMessage('Error deleting data');
+        setMessage('Error deleting data in database');
       }
+      setMessage('');
     }
   };
 
@@ -169,7 +176,7 @@ const App = () => {
       setMessage('Error compressing data');
     }
 
-    setMessage(`data: ${result}`);
+    // setMessage(`data: ${result}`);
     // var result = asciiInput+' compressed';
     setCompressedInput(result);
     // add to database and update history
