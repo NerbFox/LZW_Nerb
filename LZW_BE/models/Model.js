@@ -21,5 +21,5 @@ const LZW_Schema = mongoose.Schema(
     { timestamps: true }        
 );
 
-module.exports = mongoose.model("History", LZW_Schema);
+module.exports = mongoose.model("Histories", LZW_Schema);
 

@@ -12,7 +12,7 @@ app.use(
     origin: "*",
   })
 );
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
 console.log("express project");
 console.log("connect to db");

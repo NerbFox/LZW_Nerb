@@ -167,9 +167,9 @@ function decompressLZW(binaryString) {
 // var ascii = 'huihuihuihuihuihui'
 var ascii = 'hui hui hui hui hui hui'
 // var ascii = 'h'
-var output = compressLZW(ascii);
-console.log('result: '+output);
-console.log('check: '+binaryStringToDecimal(output));
+// var output = compressLZW(ascii);
+// console.log('result: '+output);
+// console.log('check: '+binaryStringToDecimal(output));
 
 // var hexa = 0x4
 // var hexa = 0x68787
