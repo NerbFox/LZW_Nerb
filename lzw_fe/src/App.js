@@ -177,8 +177,8 @@ const App = () => {
       ...history,
       { type: 'ascii', input: asciiInput, output: result },
     ];
-    addHistory({ type: 'ascii', input: asciiInput, output: result });
     setHistory(newHistory);
+    addHistory({ type: 'ascii', input: asciiInput, output: result });
     // fetchData();
     // setMessage(`param: ${param.message}`);
   };
@@ -233,8 +233,8 @@ const App = () => {
       ...history,
       { type: 'binary', input: binaryInput, output: result },
     ];
-    addHistory({ type: 'binary', input: binaryInput, output: result });
     setHistory(newHistory);
+    addHistory({ type: 'binary', input: binaryInput, output: result });
   };
 
   const selectHistoryItem = (item) => {
