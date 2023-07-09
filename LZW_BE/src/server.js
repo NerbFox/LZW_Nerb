@@ -6,7 +6,7 @@ const connectDb = require("../config/dbConnection");
 const errorHandler = require("../middleware/errorHandler");
 const app = express();
 const cors = require("cors");
-const router = express.Router();
+const router = require("../routes/LZW_Routes");
 const serverless = require('serverless-http');
 
 app.use(
@@ -20,9 +20,10 @@ console.log("express project");
 console.log("connect to db");
 connectDb();
 app.use(express.json());
-app.use("/LZW", require("../routes/LZW_Routes"));
+app.use("/LZW", router);
 app.use(errorHandler)
-app.use('./netlify/functions/server', router);
+// app.use('/LZW/.netlify/functions/server', router);
+module.exports = app;
 module.exports.handler = serverless(app);
 
 app.listen(port, () => {
