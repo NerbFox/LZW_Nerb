@@ -6,6 +6,8 @@ const connectDb = require("./config/dbConnection");
 const errorHandler = require("./middleware/errorHandler");
 const app = express();
 const cors = require("cors");
+const router = express.Router();
+const serverless = require('serverless-http');
 
 app.use(
   cors({
@@ -20,6 +22,8 @@ connectDb();
 app.use(express.json());
 app.use("/LZW", require("./routes/LZW_Routes"));
 app.use(errorHandler)
+app.use('./netlify/functions/server', router);
+module.exports.handler = serverless(app);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
