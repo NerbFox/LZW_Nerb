@@ -103,7 +103,7 @@ const decompress = asyncHandler(async (req, res) => {
     res.status(200).json({message: result});
     console.log("result: ", result);
 });
-
+console.log("LZW_Controller.js");
     
 
 module.exports = { 

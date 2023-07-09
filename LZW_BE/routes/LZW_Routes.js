@@ -24,4 +24,6 @@ router.route("/decompress").post(decompress);
 // :(sesuatu) adalah parameter
 router.route("/:id").delete(deleteHistory);
 router.route("/:id").get(getHistoryById)
+
+console.log("LZW_Routes.js");
 module.exports = router;

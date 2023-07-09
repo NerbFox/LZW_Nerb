@@ -20,6 +20,6 @@ const LZW_Schema = mongoose.Schema(
     },
     { timestamps: true }        
 );
-
+console.log("Model.js");
 module.exports = mongoose.model("Histories", LZW_Schema);
 

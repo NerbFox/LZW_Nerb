@@ -42,5 +42,5 @@ const errorHandler = (err, req, res, next) => {
             break;
     }
 };
-
+console.log("errorHandler.js");
 module.exports = errorHandler;

@@ -185,7 +185,7 @@ var ascii = 'hui hui hui hui hui hui'
 // var j = "nigel sahl ";
 // j = j.substring(0, j.length-1);
 // console.log(j);
-
+console.log("algo.js");
 module.exports = {
     compressLZW,
     decompressLZW
