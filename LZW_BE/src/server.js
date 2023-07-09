@@ -2,8 +2,8 @@ const dotenv = require("dotenv")
 dotenv.config();
 
 const express = require('express');
-const connectDb = require("./config/dbConnection");
-const errorHandler = require("./middleware/errorHandler");
+const connectDb = require("../config/dbConnection");
+const errorHandler = require("../middleware/errorHandler");
 const app = express();
 const cors = require("cors");
 const router = express.Router();
@@ -20,7 +20,7 @@ console.log("express project");
 console.log("connect to db");
 connectDb();
 app.use(express.json());
-app.use("/LZW", require("./routes/LZW_Routes"));
+app.use("/LZW", require("../routes/LZW_Routes"));
 app.use(errorHandler)
 app.use('./netlify/functions/server', router);
 module.exports.handler = serverless(app);

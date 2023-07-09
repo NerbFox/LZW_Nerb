@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const History = require("../models/Model");   
-const { compressLZW, decompressLZW } = require("../algo");
+const { compressLZW, decompressLZW } = require("../src/algo");
 //@desc Get all history
 //@route GET /LZW
 //@access Public
