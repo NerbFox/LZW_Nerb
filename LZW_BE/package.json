@@ -7,10 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "builds": [
-    { "src": "api.js", "use": "@vercel/node" }
+    { "src": "src/api.js", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "src/api.js" }
+    { "src": "/LZW/(.*)", "dest": "src/api.js" }
   ],
   "repository": {
     "type": "git",
