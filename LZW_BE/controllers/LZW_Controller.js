@@ -23,7 +23,7 @@ const getHistoryById = asyncHandler(async (req, res) => {
     if(history){
         res.json(history);
     }else{
-        res.status(404);
+        res.status(404).json({ message: "History not found" });
         throw new Error("History not found");
     }
 });
@@ -39,12 +39,12 @@ const createHistory = asyncHandler(async (req, res) => {
 
     if(!type || !input || !output){
         console.log("error");
-        res.status(400);
+        res.status(400).json({ message: "Invalid input" });
     }
     // if not unique input then return error
     if(histories.find(history => history.input === input)){
         console.log("The input is not unique");
-        res.status(400);
+        res.status(400).json({ message: "The input is not unique" });
     }
     const history = await History.create({type, input, output});
     res.status(201).json({history});
@@ -64,13 +64,13 @@ const deleteHistory = asyncHandler(async (req, res) => {
             res.json({ message: "History removed" });
         }else{
             console.log("The history was not found");
-            res.status(404);
+            res.status(404).json({ message: "History not found" });
             throw new Error("History not found");
         }
     }catch(err){
         console.log("Error: ", err);
         res.json({ message: "History not found" });
-        res.status(404);
+        res.status(404).json({ message: "History not found" });
     }
 });
 
@@ -83,7 +83,7 @@ const deleteAllHistories = asyncHandler(async (req, res) => {
     if (deleteResult.deletedCount > 0) {
       res.json({ message: "History removed" });
     } else {
-      res.status(404);
+      res.status(404).json({ message: "History not found" });
       throw new Error("History not found");
     }
   });  
