@@ -11,7 +11,7 @@
     { "src": "src/api.js", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/LZW/(.*)", "dest": "src/api.js" }
+    { "src": "/LZW", "dest": "src/api.js" }
   ],
   "repository": {
     "type": "git",
