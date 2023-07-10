@@ -9,6 +9,12 @@
     "build": "netlify-lambda build src",
     "dev": "node src/api.js"
   },
+  "builds": [
+    { "src": "api.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "src/api.js" }
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/NerbFox/LZW_Nerb.git"
