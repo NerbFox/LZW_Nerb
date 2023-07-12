@@ -39,20 +39,16 @@ List the ready features here:
 
 
 ## How to Run
-1. Buka terminal pada direktori folder LZW_BE
-2. Ketikkan perintah `npm run dev` pada terminal
-3. Buka tautan "https://lzw-nerb.vercel.app" pada browser
-4. Program siap digunakan
-5. Terdapat dua box input utama yaitu ASCII Input dan Binary Input
-6. Untuk melakukan kompresi, masukkan teks dalam bentuk ASCII pada ASCII Input dan klik tombol "Compress"
-7. Untuk melakukan dekompresi, masukkan teks dalam bentuk binary pada Binary Input dan klik tombol "Decompress"
-8. Hasil kompresi dan dekompresi akan ditampilkan pada bagian bawah box input
-9. Terdapat tombol "Copy Result" untuk menyalin hasil kompresi atau dekompresi ke clipboard
-10. Pada sisi sebelah kiri terdapat box history yang berisi riwayat kompresi dan dekompresi yang telah dilakukan
-11. Untuk melihat detail dari kompresi atau dekompresi, klik salah satu riwayat pada box history, maka akan muncul detail kompresi atau dekompresi pada box input dan output sesuai dengan jenisnya (ASCII atau Binary)
-12. Untuk menghapus riwayat, klik tombol "Delete" pada riwayat yang ingin dihapus
-13. Untuk menghapus semua riwayat, klik tombol "Delete All"
-14. Tersedia kotak pesan di pojok kanan bawah untuk memberitahukan status program
+1. Open the terminal in the LZW_BE folder directory.
+2. Enter the command `npm run dev` in the terminal.
+3. Open the link "https://lzw-nerb.vercel.app" in your browser.
+4. The program is now ready to use. There are two main input boxes: ASCII Input and Binary Input.
+5. To perform compression, enter the text in ASCII format in the ASCII Input box and click the "Compress" button.
+6. To perform decompression, enter the text in binary format in the Binary Input box and click the "Decompress" button.
+7. The compression and decompression results will be displayed at the bottom of the input boxes. There is a "Copy Result" button to copy the compression or decompression result to the clipboard.
+8. On the left side, there is a history box that contains the history of performed compressions and decompressions. To view the details of a compression or decompression, click on one of the history entries, and the details will be displayed in the input and output boxes according to their type (ASCII or Binary).
+9. To delete a history entry, click the "Delete" button on the corresponding entry. To delete all history entries, click the "Delete All" button.
+10. There is a message box in the bottom right corner to provide program status updates.
 
 
 ## Project Status
