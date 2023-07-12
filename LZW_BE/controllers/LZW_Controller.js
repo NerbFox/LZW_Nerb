@@ -86,8 +86,11 @@ const deleteAllHistories = asyncHandler(async (req, res) => {
       res.status(404).json({ message: "History not found" });
       throw new Error("History not found");
     }
-  });  
+  });
 
+//@desc Compress
+//@route POST /LZW/compress
+//@access Public
 const compress = asyncHandler(async (req, res) => {
     // Perform LZW compression on asciiInput from algo.js
     console.log("I am in compress");
@@ -96,6 +99,9 @@ const compress = asyncHandler(async (req, res) => {
     console.log("result: ", result);
 });
 
+//@desc Decompress
+//@route POST /LZW/decompress
+//@access Public
 const decompress = asyncHandler(async (req, res) => {
     // Perform LZW decompression on binaryInput from algo.js
     console.log("I am in decompress");

@@ -7,6 +7,7 @@ Lempel-Ziv-Welch algorithm web application
 * [Features](#features)
 * [Screenshots](#screenshots)
 * [How to Run](#how-to-run)
+* [Explanation of Project](#explanation-of-project)
 * [Project Status](#project-status)
 * [Room for Improvement](#room-for-improvement)
 
@@ -50,6 +51,48 @@ List the ready features here:
 9. To delete a history entry, click the "Delete" button on the corresponding entry. To delete all history entries, click the "Delete All" button.
 10. There is a message box in the bottom right corner to provide program status updates.
 
+
+## Explanation of Project
+<!-- dokumentasi pengembangan khususnya penjelasan tahapan dari input - proses kompresi - output -->
+1. Backend development:
+    - Initialize the backend using npm init, and install the dependencies: express, mongoose, dotenv, cors, etc.
+    - Create a main program in the backend that connect to all the other programs in the file [api](./LZW_BE/src/api.js)
+    - Create a database using MongoDB Atlas: 
+        - Create a cluster
+        - Create a database user
+        - Create a database
+        - Create a collection
+    - Create a configuration of the database in the backend in the file [database connection](./LZW_BE/config/dbConnection.js)
+    - Create a model of the database in the backend in the file [model](./LZW_BE/models/Model.js), the model is for the database collection of history of compression and decompression
+    - Create a controller of the database in the backend in the file [controller](./LZW_BE/controllers/LZW_Controller.js), the controllers that are used are getLZW, getLZWById, createLZW, deleteLZWById, deleteLZW, compressLZW, and decompressLZW. All of the controllers are used in the routes.
+    - Create a route of the database in the backend in the file [route](./LZW_BE/routes/LZW_Route.js), the routes that are used are:
+        - GET /LZW
+        - POST /LZW
+        - GET /LZW/:id
+        - DELETE /LZW/:id
+        - DELETE /LZW
+        - POST /LZW/compress
+        - POST /LZW/decompress  
+    - Create a middleware of the database in the backend in the file [middleware](./LZW_BE/middleware/verifyToken.js)
+    - The main function of the backend is in the file [algorithm](./LZW_BE/src/algo.js), this main function is used to compress and decompress the input text using LZW algorithm
+
+2. Frontend Development
+    - Initialize the frontend using npx create-react-app, and install the dependencies
+    - Edit App.js to create the main program of the frontend
+    - Edit App.css to create the style of the frontend
+    - In the App.js, create several functions to handle the input and output of the program, the functions are:
+        - fetchData
+        - addHistory
+        - useEffect
+        - deleteHistory
+        - deleteAllHistories
+        - copyToClipboard
+        - compressAscii
+        - decompressBinary
+        - handling for input change
+        - etc.
+    - Some of the functions above are getting the data from the backend 
+    - In the App.css, there are several classes that are used to style the frontend. 
 
 ## Project Status
 Project is: _complete_ 
