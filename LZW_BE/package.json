@@ -8,6 +8,13 @@
     "build": "node src/api.js",
     "dev": "node src/api.js"
   },
+  "builds": [
+    { "src": "src/api.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/(.*)",
+    "dest": "/"}
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/NerbFox/LZW_Nerb.git"
