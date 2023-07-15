@@ -22,7 +22,11 @@ LZW Nerb is a web application that can be used to compress ASCII text into binar
 - NodeJS
 - ExpressJS
 - MongoDB
+- Mongoose
+- cors
+- dotenv
 - Vercel
+- Other libraries
 
 
 ## Features
