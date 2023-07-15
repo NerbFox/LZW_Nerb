@@ -40,7 +40,7 @@ List the ready features here:
 
 
 ## How to Run
-1. Open the terminal in the LZW_BE folder directory.
+1. Open the terminal in the [LZW_BE](./LZW_BE) folder and enter the command `npm install` in the terminal.
 2. Enter the command `npm run dev` in the terminal.
 3. Open the link "https://lzw-nerb.vercel.app" in your browser.
 4. The program is now ready to use. There are two main input boxes: ASCII Input and Binary Input.
