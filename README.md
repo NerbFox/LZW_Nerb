@@ -7,6 +7,7 @@ Lempel-Ziv-Welch algorithm web application
 * [Features](#features)
 * [Screenshots](#screenshots)
 * [How to Run](#how-to-run)
+* [How to Run Locally](#how-to-run-locally)
 * [Explanation of Project](#explanation-of-project)
 * [Project Status](#project-status)
 * [Room for Improvement](#room-for-improvement)
@@ -40,17 +41,18 @@ List the ready features here:
 
 
 ## How to Run
-1. Open the terminal in the [LZW_BE](./LZW_BE) folder and enter the command `npm install` in the terminal.
-2. Enter the command `npm run dev` in the terminal.
-3. Open the link "https://lzw-nerb.vercel.app" in your browser.
-4. The program is now ready to use. There are two main input boxes: ASCII Input and Binary Input.
-5. To perform compression, enter the text in ASCII format in the ASCII Input box and click the "Compress" button.
-6. To perform decompression, enter the text in binary format in the Binary Input box and click the "Decompress" button.
-7. The compression and decompression results will be displayed at the bottom of the input boxes. There is a "Copy Result" button to copy the compression or decompression result to the clipboard.
-8. On the left side, there is a history box that contains the history of performed compressions and decompressions. To view the details of a compression or decompression, click on one of the history entries, and the details will be displayed in the input and output boxes according to their type (ASCII or Binary).
-9. To delete a history entry, click the "Delete" button on the corresponding entry. To delete all history entries, click the "Delete All" button.
-10. There is a message box in the bottom right corner to provide program status updates.
+1. Open the link "https://lzw-nerb.vercel.app" in your browser.
+2. The program is now ready to use. There are two main input boxes: ASCII Input and Binary Input.
+3. To perform compression, enter the text in ASCII format in the ASCII Input box and click the "Compress" button.
+4. To perform decompression, enter the text in binary format in the Binary Input box and click the "Decompress" button.
+5. The compression and decompression results will be displayed at the bottom of the input boxes. There is a "Copy Result" button to copy the compression or decompression result to the clipboard.
+6. On the left side, there is a history box that contains the history of performed compressions and decompressions. To view the details of a compression or decompression, click on one of the history entries, and the details will be displayed in the input and output boxes according to their type (ASCII or Binary).
+7. To delete a history entry, click the "Delete" button on the corresponding entry. To delete all history entries, click the "Delete All" button.
+8. There is a message box in the bottom right corner to provide program status updates.
 
+## How to Run Locally
+1. If you want to run the backend locally, open [App.js](./lzw_fe/src/App.js), uncoment the line 11 and comment the line 12 Open the terminal in the [LZW_BE](./LZW_BE) folder and enter the command `npm install` in the terminal. Then, follow the steps 1-8 in the section [How to Run](#how-to-run). 
+2. If you want to run the frontend locally, you have to run the backend locally too. Then, Open the terminal in the [lzw_fe](./lzw_fe) folder and enter the command `npm install` in the terminal. Run the frontend using the command `yarn start`. Then, follow the steps 2-8 in the section [How to Run](#how-to-run).
 
 ## Explanation of Project
 <!-- dokumentasi pengembangan khususnya penjelasan tahapan dari input - proses kompresi - output -->
