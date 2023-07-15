@@ -8,7 +8,8 @@ const App = () => {
   const [decompressedOutput, setDecompressedOutput] = useState('');
   const [history, setHistory] = useState([]);
   const [message, setMessage] = useState(''); // State to store success or error message
-  const react_url = "http://localhost:5001"
+  // const react_url = "http://localhost:5001"
+  const react_url = "https://lzw-nerb-be.vercel.app"
   const max_char_history = 29;
 
   const fetchData = async () => {
