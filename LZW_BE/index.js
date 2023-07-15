@@ -1,10 +1,35 @@
-const express = require("express");
+const dotenv = require("dotenv")
+dotenv.config();
+
+const express = require('express');
+const connectDb = require("./config/dbConnection");
+const errorHandler = require("./middleware/errorHandler");
 const app = express();
-const product = require("./product");
+const cors = require("cors");
+const router = require("./routes/LZW_Routes");
+const serverless = require('serverless-http');
 
-app.use(express.json({ extended: false }));
+app.use(
+  cors({
+    origin: "*",
+  })
+);
+const port = process.env.PORT || 3000;
 
-app.use("/product", product);
+console.log("express project");
+console.log("connect to db");
+connectDb();
+app.use(express.json());
+app.use("/LZW", router);
+app.use(errorHandler)
+// app.use('/LZW/.netlify/functions/server', router);
+module.exports = app;
+module.exports.handler = serverless(app);
 
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => console.log(`Server is running in port ${PORT}`));
+// export default function handler(req, res) {
+//   res.status(200).json({ name: 'Nigel Sahl' })
+// }
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+})
